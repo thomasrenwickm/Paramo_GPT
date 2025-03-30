@@ -1,10 +1,9 @@
 # Paramo_GPT
 
-Here’s a polished and clear summary you can use in your project to explain **why you chose FAISS over Chroma**:
-
+## FAISS vs. Chroma:
 ---
 
-### 🧠 **Why We Chose FAISS Over Chroma for Our Group Project**
+### **Why We Chose FAISS Over Chroma for Our Group Project**
 
 For our vector store, we chose **FAISS** instead of **Chroma** due to **cloud deployment compatibility and project scope**:
 
@@ -18,5 +17,3 @@ For our vector store, we chose **FAISS** instead of **Chroma** due to **cloud de
 ❌ Chroma does not, due to **SQLite limitations**
 
 ---
-
-Let me know if you'd like a visual or comparison table version too!
