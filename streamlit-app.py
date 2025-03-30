@@ -1,4 +1,5 @@
 #0. Importing the necessary libraries
+#0. Importing the necessary libraries
 import streamlit as st
 from dotenv import load_dotenv
 import os
@@ -12,14 +13,12 @@ from langchain_core.runnables import RunnablePassthrough
 
 
 #1. Loading Google API key from st.secrets
-os.environ["GOOGLE_API_KEY"] = st.secrets["GOOGLE_API_KEY"]
+os.environ["GOOGLE_API_KEY"] = st.secrets["GOOGLE_PAI_KEY"]
 
 # Defining safe path to local PDF (in the same folder as this file)
 current_dir = os.path.dirname(__file__)
 pdf_filename = "PAGOS 20 MARZO.pdf"
 pdf_path = os.path.join(current_dir, pdf_filename)
-
-st.title("📄 Paramo GPT - Ask Any Question About Paramo Payments To Suppliers")
 
 # --- LOAD & PROCESS PDF --- #
 
@@ -62,14 +61,35 @@ try:
     )
 
     # --- Streamlit UI --- #
+    st.image('logoparamonegro.png', width=200)
+    st.markdown("---")
+    st.title("Páramo GPT")
 
-    user_input = st.text_input("💬 Ask something about the PDF")
+
+    st.markdown("""### What is Páramo GPT and why is it valuable?
+
+**Páramo GPT** is an enterprise-level **Retrieval-Augmented Generation (RAG)** application designed to enhance how the company interacts with its supplier payment data. Instead of manually searching through large PDFs, users can simply ask natural-language questions and get instant, accurate answers.
+
+By integrating AI with Páramo’s existing workflows, this tool delivers:
+
+- ✅ **Faster access to payment information**
+- ✅ **Reduced errors when verifying transactions**
+- ✅ **Time savings for audits, reports, and support**
+- ✅ **Scalable insights as data volume grows**
+
+In short, **Páramo GPT transforms raw financial documents into actionable insights**, boosting transparency and operational efficiency across the organization.""")
+
+    st.markdown("---")
+
+    user_input = st.text_input("💬 Ask any question about payments to suppliers")
 
     if user_input:
         with st.spinner("Thinking..."):
             response = chain.invoke(user_input)
         st.markdown("### ✅ Answer:")
         st.write(response)
+
+
 
 except Exception as e:
     st.error(f"⚠️ Error loading or processing the PDF: {e}")
