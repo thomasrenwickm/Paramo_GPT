@@ -36,14 +36,6 @@ try:
     embedding = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
 
     # Create FAISS vector store in-memory --> We used FAISS over Chroma because it is the best option for cloud compatibility
-    ## FAISS (creatded by Meta/Facebook) It's not a traditional vector database, but rather a library (framework) for performing efficient similarity search on high-dimensional vectors (aka embeddings
-    #FAISS is vector index library
-    # Chroma is not able to be deployed on streamlit as it brings up a SQLite version issue
-    #FAISS is best used for fast local vector search whilst Chroma is best used for Production-level vector apps
-
-    
-    #As we are creating a small enterpise RAG which does not requier
-
     db = FAISS.from_documents(split_docs, embedding)
     retriever = db.as_retriever()
 
