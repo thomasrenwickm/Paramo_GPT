@@ -1,3 +1,4 @@
+#0. Importing the necessary libraries
 import streamlit as st
 from dotenv import load_dotenv
 import os
@@ -9,18 +10,16 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
 
-# --- SETUP --- #
 
-# Load your Google API key from st.secrets
+#1. Loading Google API key from st.secrets
 os.environ["GOOGLE_API_KEY"] = st.secrets["GOOGLE_API_KEY"]
 
-# Define safe path to your local PDF (in the same folder as this file)
+# Defining safe path to local PDF (in the same folder as this file)
 current_dir = os.path.dirname(__file__)
-pdf_filename = "PAGOS 20 MARZO.pdf"  # change if your file has a different name
+pdf_filename = "PAGOS 20 MARZO.pdf"
 pdf_path = os.path.join(current_dir, pdf_filename)
 
-# Title of your Streamlit app
-st.title("📄 Ask Questions About Your PDF")
+st.title("📄 Paramo GPT - Ask Any Question About Paramo Payments To Suppliers")
 
 # --- LOAD & PROCESS PDF --- #
 
@@ -36,7 +35,15 @@ try:
     # Embeddings model
     embedding = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
 
-    # Create Chroma/FAISS vector store in-memory
+    # Create FAISS vector store in-memory --> We used FAISS over Chroma because it is the best option for cloud compatibility
+    ## FAISS (creatded by Meta/Facebook) It's not a traditional vector database, but rather a library (framework) for performing efficient similarity search on high-dimensional vectors (aka embeddings
+    #FAISS is vector index library
+    # Chroma is not able to be deployed on streamlit as it brings up a SQLite version issue
+    #FAISS is best used for fast local vector search whilst Chroma is best used for Production-level vector apps
+
+    
+    #As we are creating a small enterpise RAG which does not requier
+
     db = FAISS.from_documents(split_docs, embedding)
     retriever = db.as_retriever()
 
