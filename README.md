@@ -15,5 +15,4 @@ For our vector store, we chose **FAISS** instead of **Chroma** due to **cloud de
 
 ✅ FAISS works smoothly on **Streamlit Cloud**  
 ❌ Chroma does not, due to **SQLite limitations**
-
 ---
