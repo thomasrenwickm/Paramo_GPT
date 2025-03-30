@@ -1,5 +1,4 @@
 #0. Importing the necessary libraries
-#0. Importing the necessary libraries
 import streamlit as st
 from dotenv import load_dotenv
 import os
