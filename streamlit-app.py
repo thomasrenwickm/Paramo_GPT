@@ -11,9 +11,8 @@ from langchain_core.runnables import RunnablePassthrough
 
 # --- SETUP --- #
 
-# Load your Google API key from dotenv
-load_dotenv("google_api_key.env")
-os.environ["GOOGLE_API_KEY"] = os.getenv('google_api_key')
+# Load your Google API key from st.secrets
+os.environ["GOOGLE_API_KEY"] = st.secrets["GOOGLE_API_KEY"]
 
 # Define safe path to your local PDF (in the same folder as this file)
 current_dir = os.path.dirname(__file__)
