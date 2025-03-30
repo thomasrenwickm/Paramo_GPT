@@ -1,4 +1,5 @@
 import streamlit as st
+from dotenv import load_dotenv
 import os
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import CharacterTextSplitter
@@ -10,8 +11,9 @@ from langchain_core.runnables import RunnablePassthrough
 
 # --- SETUP --- #
 
-# Load your Google API key from Streamlit secrets
-os.environ["GOOGLE_API_KEY"] = "AIzaSyAhUGntJhREUXPAyFVvG6rt5Bibak120EE"
+# Load your Google API key from dotenv
+load_dotenv("google_api_key.env")
+os.environ["GOOGLE_API_KEY"] = os.getenv('google_api_key')
 
 # Define safe path to your local PDF (in the same folder as this file)
 current_dir = os.path.dirname(__file__)
