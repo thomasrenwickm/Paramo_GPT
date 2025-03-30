@@ -12,7 +12,7 @@ from langchain_core.runnables import RunnablePassthrough
 
 
 #1. Loading Google API key from st.secrets
-os.environ["GOOGLE_API_KEY"] = st.secrets["GOOGLE_PAI_KEY"]
+os.environ["GOOGLE_API_KEY"] = st.secrets["GOOGLE_API_KEY"]
 
 # Defining safe path to local PDF (in the same folder as this file)
 current_dir = os.path.dirname(__file__)
