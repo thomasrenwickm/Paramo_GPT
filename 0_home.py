@@ -1,14 +1,5 @@
 #0. Importing the necessary libraries
-import streamlit as st
-from dotenv import load_dotenv
 import os
-from langchain_community.document_loaders import PyPDFLoader
-from langchain_text_splitters import CharacterTextSplitter
-from langchain.vectorstores import FAISS
-from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGenerativeAI
-from langchain_core.prompts import ChatPromptTemplate
-from langchain_core.output_parsers import StrOutputParser
-from langchain_core.runnables import RunnablePassthrough
 
 
 #1. Loading Google API key from st.secrets
