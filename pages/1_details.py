@@ -1,3 +1,5 @@
 import streamlit as st
 
-st.markdown('details')
+st.image('../logoparamonegro.png', width=200)
+st.markdown("---")
+st.title("Páramo GPT")
