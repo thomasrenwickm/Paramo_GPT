@@ -4,7 +4,7 @@ import streamlit as st
 # --- Streamlit UI --- #
 st.image('assets/logoparamonegro.png', width=200)
 st.markdown("---")
-st.title("Páramo GPT")  
+st.title("🤖 Páramo GPT")  
 
 st.markdown("""### What is Páramo GPT?
 

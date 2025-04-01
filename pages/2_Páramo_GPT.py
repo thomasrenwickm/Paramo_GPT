@@ -11,7 +11,7 @@ from langchain_core.runnables import RunnablePassthrough
 
 
 #1. Loading Google API key from st.secrets
-os.environ["GOOGLE_API_KEY"] = "AIzaSyAhUGntJhREUXPAyFVvG6rt5Bibak120EE"
+os.environ["GOOGLE_API_KEY"] = st.secrets['GOOGLE_API_KEY']
 
 # Defining safe path to local PDF
 current_dir = os.path.dirname(__file__)
@@ -64,7 +64,7 @@ try:
     # --- Streamlit UI --- #
     st.image('assets/logoparamonegro.png', width=200)
     st.markdown("---")
-    st.title("Páramo GPT")
+    st.title("🤖 Páramo GPT")
 
     user_input = st.text_input("💬 Ask any question about payments to suppliers")
 

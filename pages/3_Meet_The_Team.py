@@ -3,7 +3,7 @@ from PIL import Image
 
 st.image('assets/logoparamonegro.png', width=200)
 st.markdown("---")
-st.title("Development Team")
+st.title(" 👩‍💻👨‍💻 Development Team")
 
 st.markdown("""This is the team of developers who made PáramoGPT possible. 
 			If there are any doubts about the development of the app, 
@@ -58,6 +58,13 @@ with col5:
 	st.image(joy_image)
 	st.markdown('*Joy Zhong*')
 	
+st.write("")
+
+st.subheader("GitHub Repo")
+
+st.markdown("""This is an OpenSource project. Therefore, the GitHub repository which the includes the code 
+			used to carry out this project can be found following this link: 
+			https://github.com/thomasrenwickm/Paramo_GPT""")
 	
 
 
