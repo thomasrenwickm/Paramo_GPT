@@ -1,5 +1,78 @@
 import streamlit as st
+from dotenv import load_dotenv
+import os
+from langchain_community.document_loaders import PyPDFLoader
+from langchain_text_splitters import CharacterTextSplitter
+from langchain.vectorstores import FAISS
+from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGenerativeAI
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.runnables import RunnablePassthrough
 
-st.image('assets/logoparamonegro.png', width=200)
-st.markdown("---")
-st.title("Páramo GPT")
+
+#1. Loading Google API key from st.secrets
+os.environ["GOOGLE_API_KEY"] = "AIzaSyAhUGntJhREUXPAyFVvG6rt5Bibak120EE"
+
+# Defining safe path to local PDF
+current_dir = os.path.dirname(__file__)
+repo_root = os.path.abspath(os.path.join(current_dir, ".."))
+
+pdf_filename = "PAGOS 20 MARZO.pdf"
+pdf_path = os.path.join(repo_root, pdf_filename)
+
+
+# --- LOAD & PROCESS PDF --- #
+
+try:
+    # Load the local PDF
+    loader = PyPDFLoader(pdf_path)
+    raw_docs = loader.load()
+
+    # Split document into chunks
+    splitter = CharacterTextSplitter(chunk_size=200, chunk_overlap=20)
+    split_docs = splitter.split_documents(raw_docs)
+
+    # Embeddings model
+    embedding = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
+
+    # Create FAISS vector store in-memory --> We used FAISS over Chroma because it is the best option for cloud compatibility
+    db = FAISS.from_documents(split_docs, embedding)
+    retriever = db.as_retriever()
+
+    # --- RAG Chain Setup --- #
+
+    prompt = ChatPromptTemplate.from_template("""
+    Answer the question based only on the following context:
+
+    {context}
+
+    Question: {question}
+    """)
+
+    llm = ChatGoogleGenerativeAI(model='gemini-2.0-flash')
+
+    def format_docs(docs):
+        return "\n\n".join([d.page_content for d in docs])
+
+    chain = (
+        {"context": retriever | format_docs, "question": RunnablePassthrough()}
+        | prompt
+        | llm
+        | StrOutputParser()
+    )
+
+    # --- Streamlit UI --- #
+    st.image('assets/logoparamonegro.png', width=200)
+    st.markdown("---")
+    st.title("Páramo GPT")
+
+    user_input = st.text_input("💬 Ask any question about payments to suppliers")
+
+    if user_input:
+        with st.spinner("Thinking..."):
+            response = chain.invoke(user_input)
+        st.markdown("### ✅ Answer:")
+        st.write(response)
+
+except Exception as e:
+    st.error(f"⚠️ Error loading or processing the PDF: {e}")
