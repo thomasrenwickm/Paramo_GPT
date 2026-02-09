@@ -34,7 +34,7 @@ try:
     split_docs = splitter.split_documents(raw_docs)
 
     # Embeddings model
-    embedding = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
+    embedding = GoogleGenerativeAIEmbeddings(model="models/text-embedding-004")
 
     # Create FAISS vector store in-memory --> We used FAISS over Chroma because it is the best option for cloud compatibility
     db = FAISS.from_documents(split_docs, embedding)
